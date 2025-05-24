@@ -19,9 +19,6 @@ public protocol _EmittingChannelHandler {
     /// The type of the outbound data which will be forwarded to the next `ChannelOutboundHandler` in the `ChannelPipeline`.
     associatedtype OutboundOut = Never
 
-    /// Wrap the provided `OutboundOut` that will be passed to the next `ChannelOutboundHandler` by calling `ChannelHandlerContext.write`.
-    @inlinable
-    func wrapOutboundOut(_ value: OutboundOut) -> NIOAny
 }
 
 /// Default implementations for `_EmittingChannelHandler`.
@@ -47,13 +44,6 @@ public protocol ChannelInboundHandler: _ChannelInboundHandler, _EmittingChannelH
     /// The type of the inbound data which will be forwarded to the next `ChannelInboundHandler` in the `ChannelPipeline`.
     associatedtype InboundOut = Never
 
-    /// Unwrap the provided `NIOAny` that was passed to `channelRead`.
-    @inlinable
-    func unwrapInboundIn(_ value: NIOAny) -> InboundIn
-
-    /// Wrap the provided `InboundOut` that will be passed to the next `ChannelInboundHandler` by calling `ChannelHandlerContext.fireChannelRead`.
-    @inlinable
-    func wrapInboundOut(_ value: InboundOut) -> NIOAny
 }
 
 /// Default implementations for `ChannelInboundHandler`.
@@ -86,9 +76,6 @@ public protocol ChannelOutboundHandler: _ChannelOutboundHandler, _EmittingChanne
     /// The type of the outbound data which is wrapped in `NIOAny`.
     associatedtype OutboundIn
 
-    /// Unwrap the provided `NIOAny` that was passed to `write`.
-    @inlinable
-    func unwrapOutboundIn(_ value: NIOAny) -> OutboundIn
 }
 
 /// Default implementations for `ChannelOutboundHandler`.
